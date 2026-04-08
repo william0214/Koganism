@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8e8f0"/>
+      <stop offset="100%" stop-color="#4ade80"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+    <linearGradient id="g3" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ef4444" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- DNA double helix backbone (left strand) -->
+  <path d="M 156 56 C 156 120, 356 136, 356 200 C 356 264, 156 280, 156 344 C 156 408, 356 424, 356 456"
+        stroke="url(#g2)" stroke-width="18" stroke-linecap="round" fill="none" opacity="0.9"/>
+
+  <!-- DNA double helix backbone (right strand) -->
+  <path d="M 356 56 C 356 120, 156 136, 156 200 C 156 264, 356 280, 356 344 C 356 408, 156 424, 156 456"
+        stroke="url(#g1)" stroke-width="18" stroke-linecap="round" fill="none" opacity="0.9"/>
+
+  <!-- Cross-bridges (base pairs) -->
+  <line x1="196" y1="96"  x2="316" y2="96"  stroke="#4ade80" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+  <line x1="172" y1="136" x2="340" y2="136" stroke="#4ade80" stroke-width="6" stroke-linecap="round" opacity="0.25"/>
+  <line x1="220" y1="176" x2="292" y2="176" stroke="#4ade80" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+  <line x1="292" y1="224" x2="220" y2="224" stroke="#4ade80" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+  <line x1="340" y1="264" x2="172" y2="264" stroke="#4ade80" stroke-width="6" stroke-linecap="round" opacity="0.25"/>
+  <line x1="316" y1="304" x2="196" y2="304" stroke="#4ade80" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+  <line x1="220" y1="344" x2="292" y2="344" stroke="#4ade80" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+  <line x1="172" y1="384" x2="340" y2="384" stroke="#4ade80" stroke-width="6" stroke-linecap="round" opacity="0.25"/>
+  <line x1="196" y1="416" x2="316" y2="416" stroke="#4ade80" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- Immunity node (red) -->
+  <circle cx="156" cy="200" r="22" fill="#0a0a0f" stroke="url(#g3)" stroke-width="5"/>
+  <circle cx="156" cy="200" r="8" fill="#ef4444" opacity="0.85"/>
+
+  <!-- Metabolism node (green) -->
+  <circle cx="356" cy="344" r="22" fill="#0a0a0f" stroke="url(#g2)" stroke-width="5"/>
+  <circle cx="356" cy="344" r="8" fill="#4ade80" opacity="0.85"/>
+
+  <!-- Subtle glow -->
+  <circle cx="156" cy="200" r="36" fill="#ef4444" opacity="0.06"/>
+  <circle cx="356" cy="344" r="36" fill="#4ade80" opacity="0.06"/>
+</svg>

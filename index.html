@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Koganism — Knowledge Organism Philosophy">
 <meta name="twitter:description" content="Most knowledge tools are built. This one is grown.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -101,6 +101,13 @@
     bottom: 0; left: 0; right: 0;
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  .hero-logo {
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.1s forwards;
+    filter: drop-shadow(0 0 40px rgba(74,222,128,0.15));
   }
 
   .hero-label {
@@ -546,6 +553,7 @@
 
 <!-- HERO -->
 <section class="hero">
+  <img src="logo.svg" alt="Koganism" class="hero-logo" width="80" height="80">
   <div class="hero-label">
     <span data-lang-en>Knowledge Organism Philosophy</span>
     <span data-lang-zh>知識有機體哲學</span>
