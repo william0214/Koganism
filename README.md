@@ -1,8 +1,8 @@
-# Bio-Knowledge Pipeline
-### A Knowledge Metabolism Framework · 知識代謝框架
+# Koganism
+### A Philosophy of Knowledge as Organism · 知識有機體哲學
 
-> Most knowledge systems are libraries. This one is a living organism.
-> 大多數知識系統是圖書館。這一套是活的有機體。
+> Most knowledge tools are built. This one is grown.
+> 大多數知識工具是被建造的。這一套是被培養的。
 
 ---
 
@@ -225,5 +225,21 @@ In an era where AI can hallucinate convincingly, a knowledge system without an i
 
 ---
 
-*Built by someone who believes knowledge systems should behave like organisms, not filing cabinets.*
-*由一個相信知識系統應該像有機體而非檔案櫃的人所建立。*
+---
+
+## What is Koganism · 什麼是 Koganism
+
+**Koganism** = Knowledge + Organism + a philosophy.
+
+Not a tool. Not a system. Not a life cycle.
+An organism — something you grow, not something you build.
+
+**Koganism** = 知識 + 有機體 + 一種哲學立場。
+
+不是工具，不是系統，不是流程。
+是一個有機體——你培養它，而不是建造它。
+
+---
+
+*Koganism: the belief that knowledge should behave like a living thing — metabolizing, defending, pruning, and evolving.*
+*Koganism：相信知識應該像活的東西一樣運作——代謝、防禦、修剪、進化。*
