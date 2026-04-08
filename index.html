@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koganism — Knowledge Organism Philosophy</title>
+<meta name="description" content="Most knowledge tools are built. This one is grown. Koganism treats knowledge like a living organism — metabolizing, defending, pruning, and evolving.">
+<meta property="og:title" content="Koganism — Knowledge Organism Philosophy">
+<meta property="og:description" content="Most knowledge tools are built. This one is grown.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://koganism.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Koganism — Knowledge Organism Philosophy">
+<meta name="twitter:description" content="Most knowledge tools are built. This one is grown.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg-card: #0d0d16;
+    --border: #1e1e2e;
+    --border-subtle: #0f0f1a;
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.08);
+    --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.05);
+    --text: #e8e8f0;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --text-dim: #374151;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── LANG SWITCH ── */
+  .lang-switch {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    display: flex;
+    gap: 4px;
+    z-index: 100;
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px;
+  }
+  .lang-btn {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--sans);
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
+  }
+  .lang-btn.active {
+    color: var(--green);
+    background: var(--green-dim);
+  }
+  .lang-btn:hover { color: var(--green); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 20%; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(74,222,128,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    font-family: var(--sans);
+    background: linear-gradient(135deg, #e8e8f0 30%, var(--green) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite, fadeUp 0.8s ease 0.1s forwards;
+    opacity: 0;
+    line-height: 1.05;
+  }
+
+  .hero-subtitle {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-family: var(--sans);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-tagline {
+    margin-top: 40px;
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--text-secondary);
+    font-family: var(--sans);
+    line-height: 1.7;
+    max-width: 520px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+  .hero-tagline .dim { color: var(--text-muted); }
+  .hero-tagline .accent { color: var(--green); font-weight: 600; }
+
+  .hero-cta {
+    margin-top: 48px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    background: var(--green);
+    color: #0a0a0f;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover {
+    background: #6ee7a0;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(74,222,128,0.2);
+  }
+  .btn-primary svg { width: 18px; height: 18px; }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--sans);
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-dim);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards, float 3s ease-in-out infinite 1.8s;
+  }
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 24px;
+    background: linear-gradient(var(--text-dim), transparent);
+    margin: 8px auto 0;
+  }
+
+  /* ── SECTION COMMON ── */
+  .section {
+    padding: 100px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── ORGANISM SECTION ── */
+  .organism-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .organism-wrap::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(74,222,128,0.025) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .core-systems {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .core-card {
+    border-radius: 14px;
+    padding: 24px 28px;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .core-card:hover { transform: translateY(-2px); }
+  .core-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .core-card.immunity {
+    background: var(--red-dim);
+    border-color: rgba(239,68,68,0.15);
+  }
+  .core-card.immunity:hover { border-color: rgba(239,68,68,0.4); }
+  .core-card.immunity::before { background: linear-gradient(90deg, var(--red), transparent); }
+  .core-card.metabolism {
+    background: var(--green-dim);
+    border-color: rgba(74,222,128,0.15);
+  }
+  .core-card.metabolism:hover { border-color: rgba(74,222,128,0.4); }
+  .core-card.metabolism::before { background: linear-gradient(90deg, var(--green), transparent); }
+
+  .core-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .core-icon { font-size: 20px; }
+  .core-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: var(--sans);
+  }
+  .immunity .core-name { color: var(--red); }
+  .metabolism .core-name { color: var(--green); }
+  .core-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--sans);
+    margin-bottom: 12px;
+  }
+  .core-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-family: var(--sans);
+  }
+
+  .pipeline-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 16px;
+    font-family: var(--sans);
+  }
+
+  .pipeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+    padding: 4px 0;
+  }
+  .stage {
+    flex: 1;
+    min-width: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .stage:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-60%);
+    color: var(--text-dim);
+    font-size: 14px;
+    z-index: 2;
+  }
+  .stage-box {
+    background: rgba(17,17,32,0.8);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 10px;
+    width: 100%;
+    text-align: center;
+    transition: all 0.25s;
+    cursor: default;
+  }
+  .stage-box:hover {
+    border-color: var(--green);
+    background: var(--green-dim);
+    transform: translateY(-2px);
+  }
+  .stage-num {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .stage-main {
+    font-size: 22px;
+    color: var(--text);
+    font-family: var(--sans);
+    margin-bottom: 4px;
+  }
+  .stage-sub {
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: #4b5563;
+    text-transform: uppercase;
+    font-family: var(--sans);
+  }
+
+  /* ── PHILOSOPHY SECTION ── */
+  .philosophy-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .philosophy-divider {
+    background: var(--border);
+    height: 100%;
+  }
+  .phil-quote {
+    font-size: 17px;
+    color: var(--text-secondary);
+    line-height: 2;
+    font-family: var(--sans);
+    font-style: italic;
+  }
+  .phil-quote .accent { color: var(--green); font-style: normal; font-weight: 600; }
+
+  .phil-definition {
+    font-size: 14px;
+    line-height: 1.9;
+    font-family: var(--sans);
+  }
+  .phil-word {
+    color: var(--green);
+    font-size: 24px;
+    letter-spacing: 3px;
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .phil-breakdown { color: var(--text-muted); }
+  .phil-breakdown .hl { color: var(--text-secondary); }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    border-top: 1px solid var(--border-subtle);
+    padding: 48px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-brand {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-family: var(--sans);
+    letter-spacing: 1px;
+  }
+  .footer-brand .accent { color: var(--green); }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: var(--sans);
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--green); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(-6px); }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { padding: 60px 24px 48px; min-height: 90vh; }
+    .hero-subtitle { letter-spacing: 2px; font-size: 12px; }
+    .hero-cta { flex-direction: column; width: 100%; }
+    .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+    .section { padding: 64px 24px; }
+    .core-systems { grid-template-columns: 1fr; }
+    .organism-wrap { padding: 24px; }
+    .pipeline { gap: 4px; }
+    .stage { min-width: 72px; }
+    .stage-main { font-size: 18px; }
+    .stage:not(:last-child)::after { font-size: 10px; right: -6px; }
+    .philosophy-box {
+      grid-template-columns: 1fr;
+      padding: 32px 28px;
+      gap: 32px;
+    }
+    .philosophy-divider { display: none; }
+    .phil-quote { font-size: 15px; }
+    .lang-switch { top: 16px; right: 16px; }
+    .hero-scroll { display: none; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  /* bilingual hide/show */
+  [data-lang-zh] { display: none; }
+  html.zh [data-lang-en] { display: none; }
+  html.zh [data-lang-zh] { display: block; }
+  html.zh span[data-lang-zh] { display: inline; }
+  html.zh span[data-lang-en] { display: none; }
+  span[data-lang-en] { display: inline; }
+</style>
+</head>
+<body>
+
+<!-- LANGUAGE SWITCH -->
+<div class="lang-switch">
+  <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+  <button class="lang-btn" onclick="setLang('zh')" id="btn-zh">中文</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">
+    <span data-lang-en>Knowledge Organism Philosophy</span>
+    <span data-lang-zh>知識有機體哲學</span>
+  </div>
+  <h1>Koganism</h1>
+  <div class="hero-subtitle">
+    <span data-lang-en>Knowledge + Organism + Philosophy</span>
+    <span data-lang-zh>知識 + 有機體 + 哲學</span>
+  </div>
+  <div class="hero-tagline">
+    <span data-lang-en>
+      Most knowledge tools are <span class="accent">built</span>.<br>
+      This one is <span class="accent">grown</span>.
+    </span>
+    <span data-lang-zh>
+      多數知識工具是被<span class="accent">建造</span>的。<br>
+      這一個是被<span class="accent">培育</span>的。
+    </span>
+  </div>
+  <div class="hero-cta">
+    <a class="btn-primary" href="https://github.com/william0214/Koganism" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span data-lang-en>Star on GitHub</span>
+      <span data-lang-zh>在 GitHub 上 Star</span>
+    </a>
+    <a class="btn-secondary" href="koganism-blueprint.html">
+      <span data-lang-en>Read the Blueprint →</span>
+      <span data-lang-zh>閱讀完整藍圖 →</span>
+    </a>
+  </div>
+  <div class="hero-scroll">
+    <span data-lang-en>scroll</span>
+    <span data-lang-zh>往下滑</span>
+  </div>
+</section>
+
+<!-- ORGANISM ARCHITECTURE -->
+<section class="section reveal">
+  <div class="section-label">
+    <span data-lang-en>Organism Architecture</span>
+    <span data-lang-zh>有機體架構</span>
+  </div>
+  <div class="organism-wrap">
+
+    <div class="core-systems">
+      <div class="core-card immunity">
+        <div class="core-header">
+          <span class="core-icon">🔴</span>
+          <span class="core-name">
+            <span data-lang-en>Immunity</span>
+            <span data-lang-zh>免疫</span>
+          </span>
+        </div>
+        <div class="core-sub">
+          <span data-lang-en>Defense & Truth Verification</span>
+          <span data-lang-zh>防禦與真偽辨識</span>
+        </div>
+        <div class="core-desc">
+          <span data-lang-en>Always on. Cross-validates every incoming signal against the existing knowledge base. Flags hallucinations. Quarantines unsourced claims. Triggers inflammation when conflicts detected.</span>
+          <span data-lang-zh>永遠運作。對比現有知識庫交叉驗證每個新信號。標記幻覺，隔離無來源論點，衝突時觸發炎症反應。</span>
+        </div>
+      </div>
+      <div class="core-card metabolism">
+        <div class="core-header">
+          <span class="core-icon">🟢</span>
+          <span class="core-name">
+            <span data-lang-en>Metabolism</span>
+            <span data-lang-zh>代謝</span>
+          </span>
+        </div>
+        <div class="core-sub">
+          <span data-lang-en>Energy & Conversion</span>
+          <span data-lang-zh>能量與組織轉換</span>
+        </div>
+        <div class="core-desc">
+          <span data-lang-en>Measures whether the pipeline is working. Knowledge that doesn't convert into decisions, projects, or shipped output has not been metabolized — it's been stored.</span>
+          <span data-lang-zh>衡量流水線是否有效。未轉化為決策或產出的知識只是被儲存，不是被代謝。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-label">
+      <span data-lang-en>↕ Pipeline ↕</span>
+      <span data-lang-zh>↕ 流水線 ↕</span>
+    </div>
+
+    <div class="pipeline">
+      <div class="stage">
+        <div class="stage-box">
+          <div class="stage-num">
+            <span data-lang-en>STAGE 0</span>
+            <span data-lang-zh>階段 0</span>
+          </div>
+          <div class="stage-main">
+            <span data-lang-en>Smell</span>
+            <span data-lang-zh>聞</span>
+          </div>
+          <div class="stage-sub">
+            <span data-lang-en>detect</span>
+            <span data-lang-zh>嗅探</span>
+          </div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-box">
+          <div class="stage-num">
+            <span data-lang-en>STAGE 1</span>
+            <span data-lang-zh>階段 1</span>
+          </div>
+          <div class="stage-main">
+            <span data-lang-en>Ingest</span>
+            <span data-lang-zh>攝取</span>
+          </div>
+          <div class="stage-sub">
+            <span data-lang-en>capture</span>
+            <span data-lang-zh>捕食</span>
+          </div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-box">
+          <div class="stage-num">
+            <span data-lang-en>STAGE 2</span>
+            <span data-lang-zh>階段 2</span>
+          </div>
+          <div class="stage-main">
+            <span data-lang-en>Chew</span>
+            <span data-lang-zh>咀嚼</span>
+          </div>
+          <div class="stage-sub">
+            <span data-lang-en>structure</span>
+            <span data-lang-zh>拆解</span>
+          </div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-box">
+          <div class="stage-num">
+            <span data-lang-en>STAGE 3</span>
+            <span data-lang-zh>階段 3</span>
+          </div>
+          <div class="stage-main">
+            <span data-lang-en>Digest</span>
+            <span data-lang-zh>消化</span>
+          </div>
+          <div class="stage-sub">
+            <span data-lang-en>extract</span>
+            <span data-lang-zh>萃取</span>
+          </div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-box">
+          <div class="stage-num">
+            <span data-lang-en>STAGE 4</span>
+            <span data-lang-zh>階段 4</span>
+          </div>
+          <div class="stage-main">
+            <span data-lang-en>Ruminate</span>
+            <span data-lang-zh>反芻</span>
+          </div>
+          <div class="stage-sub">
+            <span data-lang-en>connect</span>
+            <span data-lang-zh>融合</span>
+          </div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-box">
+          <div class="stage-num">
+            <span data-lang-en>STAGE 5</span>
+            <span data-lang-zh>階段 5</span>
+          </div>
+          <div class="stage-main">
+            <span data-lang-en>Excrete</span>
+            <span data-lang-zh>排泄</span>
+          </div>
+          <div class="stage-sub">
+            <span data-lang-en>prune</span>
+            <span data-lang-zh>修剪</span>
+          </div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-box">
+          <div class="stage-num">
+            <span data-lang-en>STAGE 6</span>
+            <span data-lang-zh>階段 6</span>
+          </div>
+          <div class="stage-main">
+            <span data-lang-en>Accumulate</span>
+            <span data-lang-zh>累積</span>
+          </div>
+          <div class="stage-sub">
+            <span data-lang-en>embody</span>
+            <span data-lang-zh>內化</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="section reveal">
+  <div class="section-label">
+    <span data-lang-en>Philosophy</span>
+    <span data-lang-zh>哲學</span>
+  </div>
+  <div class="philosophy-box">
+    <div class="phil-quote">
+      <span data-lang-en>
+        "Karpathy builds understanding from <span class="accent">first principles</span> — starting from zero, deriving everything.<br><br>
+        Koganism builds intuition from <span class="accent">metabolized and immune-filtered signals</span>.<br><br>
+        The difference isn't depth. It's <span class="accent">defense</span>."
+      </span>
+      <span data-lang-zh>
+        「Karpathy 從<span class="accent">第一性原理</span>建構理解——從零開始，推導一切。<br><br>
+        Koganism 從<span class="accent">代謝過且經免疫過濾的信號</span>建構直覺。<br><br>
+        差別不在深度，而在<span class="accent">防禦</span>。」
+      </span>
+    </div>
+    <div class="philosophy-divider"></div>
+    <div class="phil-definition">
+      <span class="phil-word">
+        <span data-lang-en>Koganism</span>
+        <span data-lang-zh>知機體</span>
+      </span>
+      <div class="phil-breakdown">
+        <span data-lang-en>
+          <span class="hl">Knowledge Organism</span> · noun · philosophy<br><br>
+          The belief that knowledge should behave like a living organism —
+          <span class="hl">metabolizing</span>, <span class="hl">defending</span>, <span class="hl">pruning</span>, and <span class="hl">evolving</span>.<br><br>
+          Not a tool you use.<br>
+          An organism you grow.
+        </span>
+        <span data-lang-zh>
+          <span class="hl">Koganism</span> · 名詞 · 哲學<br><br>
+          相信知識應該像活的有機體一般運作——
+          <span class="hl">代謝</span>、<span class="hl">防禦</span>、<span class="hl">修剪</span>、<span class="hl">演化</span>。<br><br>
+          不是你使用的工具。<br>
+          是你培育的有機體。
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span data-lang-en>KOGANISM · Blueprint v0.1 · Knowledge + Organism + <span class="accent">Philosophy</span></span>
+      <span data-lang-zh>知機體 · 藍圖 v0.1 · 知識 + 有機體 + <span class="accent">哲學</span></span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://github.com/william0214/Koganism" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="koganism-blueprint.html">
+        <span data-lang-en>Full Blueprint</span>
+        <span data-lang-zh>完整藍圖</span>
+      </a></li>
+      <li><a href="koganism-blueprint-en.html">EN Blueprint</a></li>
+      <li><a href="koganism-blueprint-zh.html">中文藍圖</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+// Language switching
+function setLang(lang) {
+  const html = document.documentElement;
+  if (lang === 'zh') {
+    html.classList.add('zh');
+    html.setAttribute('lang', 'zh-Hant');
+  } else {
+    html.classList.remove('zh');
+    html.setAttribute('lang', 'en');
+  }
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+  try { localStorage.setItem('koganism-lang', lang); } catch(e) {}
+}
+
+// Restore saved language
+try {
+  const saved = localStorage.getItem('koganism-lang');
+  if (saved === 'zh') setLang('zh');
+} catch(e) {}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
